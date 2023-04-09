@@ -10,38 +10,39 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/v1/jedi")
 public class JediResource {
 
     @Autowired
     public JediService service;
 
-    @GetMapping("jedi/all")
+    @GetMapping("/all")
     public List<Jedi> getAllJedi() {
 
         return service.findAll();
     }
 
-    @GetMapping("/jedi/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Jedi> getJedi(@PathVariable("id") Long id) {
 
         final Jedi jedi = service.findById(id);
         return ResponseEntity.ok(jedi);
     }
 
-    @PostMapping("jedi/save")
+    @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
     public Jedi create(@RequestBody Jedi jedi) {
 
         return service.save(jedi);
     }
 
-    @PutMapping("jedi/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Jedi> update(@PathVariable("id") Long id, @RequestBody Jedi jedi) {
 
         return ResponseEntity.ok(service.update(id, jedi));
     }
 
-    @DeleteMapping("jedi/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 
         service.delete(id);
